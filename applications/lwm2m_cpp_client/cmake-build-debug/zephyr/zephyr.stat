@@ -1,0 +1,75 @@
+ELF Header:
+  Magic:   7f 45 4c 46 01 01 01 00 00 00 00 00 00 00 00 00 
+  Class:                             ELF32
+  Data:                              2's complement, little endian
+  Version:                           1 (current)
+  OS/ABI:                            UNIX - System V
+  ABI Version:                       0
+  Type:                              EXEC (Executable file)
+  Machine:                           Intel 80386
+  Version:                           0x1
+  Entry point address:               0x100000
+  Start of program headers:          52 (bytes into file)
+  Start of section headers:          2314424 (bytes into file)
+  Flags:                             0x0
+  Size of this header:               52 (bytes)
+  Size of program headers:           32 (bytes)
+  Number of program headers:         2
+  Size of section headers:           40 (bytes)
+  Number of section headers:         37
+  Section header string table index: 36
+
+Section Headers:
+  [Nr] Name              Type            Addr     Off    Size   ES Flg Lk Inf Al
+  [ 0]                   NULL            00000000 000000 000000 00      0   0  0
+  [ 1] text              PROGBITS        00100000 001000 023000 00  AX  0   0 16
+  [ 2] initlevel         PROGBITS        00123000 024000 0000a8 00   A  0   0  4
+  [ 3] ctors             PROGBITS        001230a8 0240a8 000008 00  WA  0   0  1
+  [ 4] init_array        PROGBITS        001230b0 02dbc0 000000 00   W  0   0  1
+  [ 5] log_const_section PROGBITS        001230b0 0240b0 000130 00   A  0   0  4
+  [ 6] log_backends_sect PROGBITS        001231e0 0241e0 000010 00   A  0   0  4
+  [ 7] shell_area        PROGBITS        001231f0 0241f0 000030 00   A  0   0  4
+  [ 8] shell_root_cmds_s PROGBITS        00123220 024220 000048 00   A  0   0  4
+  [ 9] rodata            PROGBITS        00123280 024280 006110 00   A  0   0 32
+  [10] bss               NOBITS          001293a0 02a390 0059e8 00  WA  0   0 32
+  [11] noinit            NOBITS          0012f000 02a390 0167ec 00  WA  0   0 4096
+  [12] datas             PROGBITS        00145800 02a3a0 000354 00  WA  0   0 32
+  [13] devices           PROGBITS        00145b54 02a6f4 000044 00   A  0   0  4
+  [14] log_dynamic_secti PROGBITS        00145b98 02a738 000098 00  WA  0   0  4
+  [15] _static_thread_da PROGBITS        00145c30 02a7d0 000030 00  WA  0   0  4
+  [16] k_mem_slab_area   PROGBITS        00145c60 02a800 00006c 00  WA  0   0  4
+  [17] k_mutex_area      PROGBITS        00145ccc 02a86c 000038 00  WA  0   0  4
+  [18] k_msgq_area       PROGBITS        00145d04 02a8a4 000034 00  WA  0   0  4
+  [19] k_sem_area        PROGBITS        00145d38 02a8d8 0000a0 00  WA  0   0  4
+  [20] _net_buf_pool_are PROGBITS        00145dd8 02a978 000068 00  WA  0   0  4
+  [21] net_if_area       PROGBITS        00145e40 02a9e0 000008 00  WA  0   0  4
+  [22] net_if_dev_area   PROGBITS        00145e48 02a9e8 00001c 00  WA  0   0  4
+  [23] net_l2_area       PROGBITS        00145e64 02aa04 000010 00   A  0   0  4
+  [24] pagetables        PROGBITS        00145e74 02aa14 0031ac 00   A  0   0  1
+  [25] .comment          PROGBITS        00000000 02dbc0 000032 01  MS  0   0  1
+  [26] .debug_aranges    PROGBITS        00000000 02dbf8 003698 00      0   0  8
+  [27] .debug_info       PROGBITS        00000000 031290 0f69e5 00      0   0  1
+  [28] .debug_abbrev     PROGBITS        00000000 127c75 01ec0b 00      0   0  1
+  [29] .debug_line       PROGBITS        00000000 146880 05d62a 00      0   0  1
+  [30] .debug_frame      PROGBITS        00000000 1a3eac 00cc78 00      0   0  4
+  [31] .debug_str        PROGBITS        00000000 1b0b24 013919 01  MS  0   0  1
+  [32] .debug_loc        PROGBITS        00000000 1c443d 04b43f 00      0   0  1
+  [33] .debug_ranges     PROGBITS        00000000 20f880 012cc0 00      0   0  8
+  [34] .symtab           SYMTAB          00000000 222540 008c00 10     35 1005  4
+  [35] .strtab           STRTAB          00000000 22b140 009db8 00      0   0  1
+  [36] .shstrtab         STRTAB          00000000 234ef8 0001bf 00      0   0  1
+Key to Flags:
+  W (write), A (alloc), X (execute), M (merge), S (strings), I (info),
+  L (link order), O (extra OS processing required), G (group), T (TLS),
+  C (compressed), x (unknown), o (OS specific), E (exclude),
+  p (processor specific)
+
+Program Headers:
+  Type           Offset   VirtAddr   PhysAddr   FileSiz MemSiz  Flg Align
+  LOAD           0x001000 0x00100000 0x00100000 0x29390 0x457ec RWE 0x1000
+  LOAD           0x02a3a0 0x00145800 0x00145800 0x03820 0x03820 RW  0x20
+
+ Section to Segment mapping:
+  Segment Sections...
+   00     text initlevel ctors log_const_sections log_backends_sections shell_area shell_root_cmds_sections rodata bss noinit 
+   01     datas devices log_dynamic_sections _static_thread_data_area k_mem_slab_area k_mutex_area k_msgq_area k_sem_area _net_buf_pool_area net_if_area net_if_dev_area net_l2_area pagetables 
