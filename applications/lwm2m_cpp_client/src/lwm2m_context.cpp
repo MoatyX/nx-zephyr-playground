@@ -3,8 +3,6 @@
 #include <logging/log.h>
 LOG_MODULE_REGISTER(NX_LWM2M_CONTEXT, LOG_LEVEL_DBG);
 
-static struct lwm2m_ctx clientt;
-
 namespace nx
 {
     lwm2m_context::lwm2m_context(const char *endpoint_name)
@@ -33,7 +31,16 @@ namespace nx
 
     void lwm2m_context::start(uint32_t flags, lwm2m_ctx_event_cb_t client_event_callback)
     {
-        lwm2m_rd_client_start(&clientt, endpoint_name_, flags, client_event_callback); //start client
+        lwm2m_rd_client_start(&client, endpoint_name_, flags, client_event_callback); //start client
+    }
+
+    template<uint16_t obj_id>
+    void lwm2m_context::register_object(lwm2m_object_base<obj_id> *obj) {
+
+    }
+
+    void lwm2m_context::delete_object(uint16_t obj_id) {
+
     }
 
 } // namespace nx

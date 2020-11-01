@@ -1705,6 +1705,12 @@
 		<Unit filename="/home/moaty/zephyr_projects/nx-zephyr-playground/applications/lwm2m_cpp_client/src/main.cpp">
 			<Option target="app"/>
 		</Unit>
+		<Unit filename="/home/moaty/zephyr_projects/nx-zephyr-playground/applications/lwm2m_cpp_client/src/objects.cpp">
+			<Option target="app"/>
+		</Unit>
+		<Unit filename="/home/moaty/zephyr_projects/nx-zephyr-playground/applications/lwm2m_cpp_client/src/push_button_3347.cpp">
+			<Option target="app"/>
+		</Unit>
 		<Unit filename="/home/moaty/zephyr_projects/zephyr/arch/x86/core/cpuhalt.c">
 			<Option target="arch__x86__core"/>
 		</Unit>

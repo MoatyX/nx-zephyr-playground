@@ -3,7 +3,9 @@
 #include <logging/log.h>
 LOG_MODULE_REGISTER(NX_LWM2M_CPP_CLIENT, LOG_LEVEL_DBG);
 
+#include "objects.h"
 #include "lwm2m_context.h"
+#include "objects/push_button_3347.h"
 
 #define DEVICE_NAME CONFIG_BOARD
 #define SERVER_ADDR CONFIG_NET_CONFIG_PEER_IPV4_ADDR
@@ -61,10 +63,30 @@ static void rd_client_event(struct lwm2m_ctx *client,
     }
 }
 
+void* digital_button_read_cb(nx::push_button_3347_inst* instance) {
+    return &instance->digital_input_state;
+}
+
 void main()
 {
     LOG_INF("Starting the C++ Client");
     nx::lwm2m_context context(DEVICE_NAME);
     context.set_server_address(101, SERVER_ADDR);
+
+    /*register objects*/
+
+    //example: push button object
+    static bool push_button_state = false;
+    static nx::push_button_3347 push_button_obj;
+    static nx::push_button_3347_inst push_button_inst;
+
+    //now initialise that object
+    push_button_obj.digital_input_state.user_data = &push_button_state;     //provide a pointer to the data that represents this resource
+    push_button_obj.digital_input_state.read_cb = reinterpret_cast<nx::read_cb_t>(&digital_button_read_cb);  //some read callback function
+    push_button_obj.register_instance(&push_button_inst);                   //register the instance
+    context.register_object(&push_button_obj);
+    //===========================================================================
+
+    /*start the connection*/
     context.start(0, rd_client_event);
 }
