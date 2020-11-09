@@ -1,1 +1,0 @@
-osource "/home/moaty/zephyr_projects/zephyr/soc/$(ARCH)/*/Kconfig.soc"
