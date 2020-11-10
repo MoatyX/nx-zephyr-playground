@@ -23,20 +23,24 @@ void* digital_button_read_cb(nx::id3347::instance* instance) {
 nx::lwm2m_context context(DEVICE_NAME);
 nx::id3347::object push_button_obj;
 nx::id3347::instance button_inst;
-bool input_state = false;   //data for the button_inst
 void main() {
     LOG_INF("LwM2M C++ Client is starting....");
 
     context.set_server_address(69, SERVER_ADDR);
 
     //create objects
+    button_inst.digital_input_state = true;
     button_inst.instance_id = 0;
-    push_button_obj.digital_input_state.p_user_data = &input_state;
-    push_button_obj.digital_input_state.read_cb = reinterpret_cast<nx::read_cb_t>(digital_button_read_cb);
+    button_inst.digital_input_counter = 1337;
     push_button_obj.register_instance(&button_inst);
 
     context.register_object(&push_button_obj);
     context.start(0, rd_client_event);
+
+//    while(true){
+//        k_sleep(K_MSEC(1000));
+//        button_inst.digital_input_state = !button_inst.digital_input_state;
+//    }
 }
 
 // Client event callback function

@@ -19,26 +19,25 @@ namespace nx {
             char application_type[60];
         };
 
+#define ID3347_RES_COUNT    3
         class object : public lwm2m_object_base {
         public:
             object() : lwm2m_object_base(3347){};
             ~object() = default;
 
-            Resource(5500, resource_operations::R, digital_input_state);
+            Resource2(5500, resource_operations::R, (bool lwm2m_instance_base::*)(&instance::digital_input_state), digital_input_state);
+//            Resource(5500, resource_operations::R, digital_input_state);
             Resource(5501, resource_operations::R, digital_input_counter);
             Resource(5750, resource_operations::RW, application_type);
 
-            const lwm2m_object_resource ** get_all_res() const override {
-                return nullptr;
-            }
-
-            lwm2m_object_resource** ress() {
-//                return const_cast<lwm2m_object_resource **>(all_res);
-//                return static_cast<const lwm2m_object_resource **>(all_res);
+        public:
+            lwm2m_object_resource ** get_all_res(size_t* res_count) override {
+                *res_count = ID3347_RES_COUNT;
+                return all_res;
             }
 
         private:
-            const lwm2m_object_resource *all_res[3]{&digital_input_state, &digital_input_counter, &application_type};
+            lwm2m_object_resource *all_res[ID3347_RES_COUNT]{&digital_input_state, &digital_input_counter, &application_type};
         };
     }
 

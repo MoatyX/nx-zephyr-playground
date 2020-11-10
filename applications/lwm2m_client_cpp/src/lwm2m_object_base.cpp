@@ -1,8 +1,8 @@
 //
-// Created by moaty on 04.11.20.
+// Created by moaty on 09.11.20.
 //
 
-#include "objects.h"
+#include "lwm2m_object_base.h"
 
 namespace nx {
 //    enabling this causes cxa_pure_function error
@@ -25,10 +25,4 @@ namespace nx {
         return instances_list[index];
         //==================================================
     }
-
-    lwm2m_object_resource::lwm2m_object_resource(uint16_t obj_id, resource_operations op) {
-        this->obj_id=obj_id;
-        this->operation=op;
-    }
 }
-

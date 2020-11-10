@@ -53,6 +53,24 @@ namespace nx {
             output |= (bool)lwm2m_engine_create_obj_inst(obj_inst_path);
 
             //skip creating resource instances for now... TODO: do it
+
+            //bind zephyr callbacks with the user-defined ones
+            size_t res_count = 0;
+            lwm2m_object_resource** all_res = obj->get_all_res(&res_count);
+            for (size_t j = 0; j < 1; ++j) {
+                lwm2m_object_resource* res = all_res[j];
+                auto inst = obj->get_instance(i);
+                char* res_path = lwm2m_object_to_path(obj->object_id, i, res->resource_id, 0);
+                //register read callbacks
+
+                //set res data
+                auto data = inst->*(res->member_pointer);
+//                printk("data is null: %s\n", data == nullptr ? "true" : "false");
+//                if(data != nullptr) {
+                printk("data val: %d\n", data);
+////                    lwm2m_engine_set_res_data(res_path, data, sizeof(data), res->user_data_flags);
+//                }
+            }
         }
 
         return output;
