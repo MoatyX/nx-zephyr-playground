@@ -19,4 +19,20 @@ namespace nx {
         this->mem_ptr = mem_ptr;
         this->member_size = member_size;
     }
+
+    void lwm2m_object_resource::set_read_callback(lwm2m_engine_get_data_cb_t read_callback) {
+        read_cb = read_callback;
+    }
+
+    void lwm2m_object_resource::set_post_write_callback(lwm2m_engine_set_data_cb_t write_callback) {
+        write_cb = write_callback;
+    }
+
+    lwm2m_engine_get_data_cb_t lwm2m_object_resource::get_read_cb() {
+        return read_cb;
+    }
+
+    lwm2m_engine_set_data_cb_t lwm2m_object_resource::get_post_write_cb() {
+        return write_cb;
+    }
 }

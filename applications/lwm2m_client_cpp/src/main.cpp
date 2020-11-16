@@ -23,6 +23,13 @@ void* digital_button_read_cb(nx::id3347::instance* instance) {
 nx::lwm2m_context context(DEVICE_NAME);
 nx::id3347::object push_button_obj;
 nx::id3347::instance button_inst;
+
+void *app_type_read_cb(uint16_t obj_inst_id, uint16_t res_id, uint16_t res_inst_id, size_t *data_len) {
+    static char* output = "Hello Read callback!";
+    *data_len = strlen(output);
+    return output;
+}
+
 void main() {
     LOG_INF("LwM2M C++ Client is starting....");
     context.set_server_address(69, SERVER_ADDR);
@@ -32,6 +39,7 @@ void main() {
     button_inst.instance_id = 0;
     button_inst.digital_input_counter = 1337;
     nx::set_str(button_inst.application_type, "Hello World!");
+    push_button_obj.application_type.set_read_callback(app_type_read_cb);
     push_button_obj.register_instance(&button_inst);
 
     context.register_object(&push_button_obj);

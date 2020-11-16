@@ -62,8 +62,12 @@ namespace nx {
             for (size_t j = 0; j < res_count; ++j) {
                 lwm2m_object_resource* res = all_res[j];
                 char* res_path = lwm2m_object_to_path(obj->object_id, i, res->resource_id, 0);
-                //register read callbacks
-//                lwm2m_engine_register_read_callback(res_path, )
+
+                //register read/write callbacks
+                lwm2m_engine_get_data_cb_t read_cb = res->get_read_cb();
+                lwm2m_engine_set_data_cb_t post_write_cb = res->get_post_write_cb();
+                if(read_cb != nullptr) lwm2m_engine_register_read_callback(res_path, read_cb);
+                if(post_write_cb != nullptr) lwm2m_engine_register_post_write_callback(res_path, post_write_cb);
 
                 //allow user to set resource data
                 void* data = &(inst->*(res->mem_ptr));

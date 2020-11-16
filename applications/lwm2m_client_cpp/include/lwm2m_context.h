@@ -5,9 +5,7 @@
 #ifndef LWM2M_CLIENT_CPP_LWM2M_CONTEXT_H
 #define LWM2M_CLIENT_CPP_LWM2M_CONTEXT_H
 
-extern "C" {
-#include <net/lwm2m.h>
-}
+#include "lwm2m_cpp.h"
 
 #include "objects.h"
 
