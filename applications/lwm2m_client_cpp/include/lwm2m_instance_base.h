@@ -7,6 +7,7 @@
 
 #include <inttypes.h>
 
+#define DEFAULT_MAX_STR_LEN 64
 
 /**
 * @brief base struct for all lwm2m instance

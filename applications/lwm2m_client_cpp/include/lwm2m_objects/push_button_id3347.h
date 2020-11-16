@@ -15,8 +15,8 @@ namespace nx {
             ~instance() = default;
 
             bool digital_input_state;
-            int digital_input_counter;
-            char application_type[60];
+            uint64_t digital_input_counter;
+            char application_type[DEFAULT_MAX_STR_LEN];
         };
 
 #define ID3347_RES_COUNT    3
@@ -25,10 +25,12 @@ namespace nx {
             object() : lwm2m_object_base(3347){};
             ~object() = default;
 
-            Resource2(5500, resource_operations::R, (bool lwm2m_instance_base::*)(&instance::digital_input_state), digital_input_state);
-//            Resource(5500, resource_operations::R, digital_input_state);
-            Resource(5501, resource_operations::R, digital_input_counter);
-            Resource(5750, resource_operations::RW, application_type);
+            Resource(5500, resource_operations::R, ((member_pointer)(&instance::digital_input_state)),
+                     MemberSize(instance::digital_input_state), digital_input_state);
+            Resource(5501, resource_operations::R,((member_pointer)(&instance::digital_input_counter)),
+                     MemberSize(instance::digital_input_counter), digital_input_counter);
+            Resource(5750, resource_operations::RW, ((member_pointer)(&instance::application_type)),
+                     MemberSize(instance::application_type), application_type);
 
         public:
             lwm2m_object_resource ** get_all_res(size_t* res_count) override {

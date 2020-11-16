@@ -11,6 +11,7 @@ LOG_MODULE_REGISTER(NX_LWM2M_CPP_CLIENT, LOG_LEVEL_DBG);
 
 #include "lwm2m_context.h"
 #include "lwm2m_objects/push_button_id3347.h"
+#include "utility.h"
 
 #define DEVICE_NAME CONFIG_BOARD
 #define SERVER_ADDR CONFIG_NET_CONFIG_PEER_IPV4_ADDR
@@ -19,28 +20,22 @@ static void rd_client_event(struct lwm2m_ctx *client, enum lwm2m_rd_client_event
 void* digital_button_read_cb(nx::id3347::instance* instance) {
     return &instance->digital_input_state;
 }
-
 nx::lwm2m_context context(DEVICE_NAME);
 nx::id3347::object push_button_obj;
 nx::id3347::instance button_inst;
 void main() {
     LOG_INF("LwM2M C++ Client is starting....");
-
     context.set_server_address(69, SERVER_ADDR);
 
-    //create objects
-    button_inst.digital_input_state = true;
+    //set some data to the Button Instance object
+    button_inst.digital_input_state = false;
     button_inst.instance_id = 0;
     button_inst.digital_input_counter = 1337;
+    nx::set_str(button_inst.application_type, "Hello World!");
     push_button_obj.register_instance(&button_inst);
 
     context.register_object(&push_button_obj);
     context.start(0, rd_client_event);
-
-//    while(true){
-//        k_sleep(K_MSEC(1000));
-//        button_inst.digital_input_state = !button_inst.digital_input_state;
-//    }
 }
 
 // Client event callback function

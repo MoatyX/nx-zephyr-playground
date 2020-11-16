@@ -30,6 +30,7 @@ namespace nx {
     }
 
     void lwm2m_context::start(uint32_t flags, lwm2m_ctx_event_cb_t client_event_callback) {
+        memset(&client, 0, sizeof(client));
         lwm2m_rd_client_start(&client, endpoint_name, flags, client_event_callback); //start client
     }
 
@@ -57,19 +58,18 @@ namespace nx {
             //bind zephyr callbacks with the user-defined ones
             size_t res_count = 0;
             lwm2m_object_resource** all_res = obj->get_all_res(&res_count);
-            for (size_t j = 0; j < 1; ++j) {
+            auto inst = obj->get_instance(i);
+            for (size_t j = 0; j < res_count; ++j) {
                 lwm2m_object_resource* res = all_res[j];
-                auto inst = obj->get_instance(i);
                 char* res_path = lwm2m_object_to_path(obj->object_id, i, res->resource_id, 0);
                 //register read callbacks
+//                lwm2m_engine_register_read_callback(res_path, )
 
-                //set res data
-                auto data = inst->*(res->member_pointer);
-//                printk("data is null: %s\n", data == nullptr ? "true" : "false");
-//                if(data != nullptr) {
-                printk("data val: %d\n", data);
-////                    lwm2m_engine_set_res_data(res_path, data, sizeof(data), res->user_data_flags);
-//                }
+                //allow user to set resource data
+                void* data = &(inst->*(res->mem_ptr));
+                if(data != nullptr) {
+                    lwm2m_engine_set_res_data(res_path, data, res->member_size, res->user_data_flags);
+                }
             }
         }
 

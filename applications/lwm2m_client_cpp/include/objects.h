@@ -6,10 +6,11 @@
 #define LWM2M_CLIENT_CPP_OBJECTS_H
 
 #include "lwm2m_object_base.h"
+#include "nx_string.h"
 
 namespace nx {
-#define Resource(id, op, resource_name)   lwm2m_object_resource resource_name{(id), (op)}
-#define Resource2(id, op, member_ptr, resource_name)   lwm2m_object_resource resource_name{(id), (op), (member_ptr)}
+#define Resource(id, op, member_ptr, member_size, resource_name)   lwm2m_object_resource resource_name{(id), (op), (member_ptr), (member_size)}
+#define MemberSize(member) sizeof(decltype((member)))
 }
 
 #endif //LWM2M_CLIENT_CPP_OBJECTS_H
