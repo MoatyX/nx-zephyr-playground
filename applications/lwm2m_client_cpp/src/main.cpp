@@ -17,9 +17,7 @@ LOG_MODULE_REGISTER(NX_LWM2M_CPP_CLIENT, LOG_LEVEL_DBG);
 #define SERVER_ADDR CONFIG_NET_CONFIG_PEER_IPV4_ADDR
 
 static void rd_client_event(struct lwm2m_ctx *client, enum lwm2m_rd_client_event client_event);
-void* digital_button_read_cb(nx::id3347::instance* instance) {
-    return &instance->digital_input_state;
-}
+
 nx::lwm2m_context context(DEVICE_NAME);
 nx::id3347::object push_button_obj;
 nx::id3347::instance button_inst;
