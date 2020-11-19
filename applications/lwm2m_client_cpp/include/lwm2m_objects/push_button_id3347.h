@@ -9,6 +9,8 @@
 
 namespace nx {
     namespace id3347 {
+#define ID3347_RES_COUNT    3
+#define ID3347_MAX_INST_COUNT   2
         class instance : public lwm2m_instance_base {
         public:
             instance() = default;
@@ -19,7 +21,6 @@ namespace nx {
             char application_type[DEFAULT_MAX_STR_LEN];
         };
 
-#define ID3347_RES_COUNT    3
         class object : public lwm2m_object_base {
         public:
             object() : lwm2m_object_base(3347){};

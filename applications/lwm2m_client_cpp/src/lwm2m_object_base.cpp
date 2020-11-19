@@ -10,17 +10,18 @@ namespace nx {
 //        current_instances_count = 0;
 //    }
 
-    void lwm2m_object_base::register_instance(lwm2m_instance_base *instance) {
-        //TODO: remove this and use dynamic memory at some point
-        if(current_instances_count >= MAX_INSTANCES) return;
+    bool lwm2m_object_base::register_instance(lwm2m_instance_base *instance) {
+        //statically allocated memory
+        if(current_instances_count >= MAX_INSTANCES) return false;
 
         instances_list[current_instances_count] = instance;
         current_instances_count++;
+        return true;
         //=======================================================
     }
 
     lwm2m_instance_base *lwm2m_object_base::get_instance(size_t index) {
-        //TODO: do dynamic memory stuff...
+        //statically allocated memory
         if(index > MAX_INSTANCES - 1) return nullptr;
         return instances_list[index];
         //==================================================
