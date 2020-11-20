@@ -9,6 +9,8 @@
 
 #include "objects.h"
 
+#include "lwm2m_objects/device_id3.h"
+
 namespace nx {
     class lwm2m_context {
     public:
@@ -41,6 +43,17 @@ namespace nx {
          * @return true if registration successful
          */
         bool register_object(lwm2m_object_base* obj);
+
+        /**
+         * @brief unregister (delete) an object instance
+         * @param obj
+         * @param instance_id
+         */
+        void unregister_object_instance(uint16_t object_id, uint16_t instance_id);
+
+    public:
+        id3::object device;
+        id3::instance device_inst;
 
     private:
         const char *endpoint_name;

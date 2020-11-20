@@ -5,6 +5,9 @@
 #include "lwm2m_context.h"
 #include "utility.h"
 
+extern "C" {
+#include <lwm2m_engine.h>
+}
 namespace nx {
     lwm2m_context::lwm2m_context(const char *endpoint_name) {
         this->endpoint_name = endpoint_name;
@@ -75,8 +78,15 @@ namespace nx {
                     lwm2m_engine_set_res_data(res_path, data, res->member_size, res->user_data_flags);
                 }
             }
-        }
 
+            //register a callback when an instance is deleted
+            lwm2m_engine_user_cb_t inst_delete_cb = inst->get_delete_cb();
+            if(inst_delete_cb != nullptr) lwm2m_engine_register_delete_callback(obj->object_id, inst_delete_cb);
+        }
         return output;
+    }
+
+    void lwm2m_context::unregister_object_instance(const uint16_t object_id, const uint16_t instance_id) {
+        lwm2m_delete_obj_inst(object_id, instance_id);
     }
 }

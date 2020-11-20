@@ -10,7 +10,6 @@
 namespace nx {
     namespace id3347 {
 #define ID3347_RES_COUNT    3
-#define ID3347_MAX_INST_COUNT   2
         class instance : public lwm2m_instance_base {
         public:
             instance() = default;
@@ -26,12 +25,12 @@ namespace nx {
             object() : lwm2m_object_base(3347){};
             ~object() = default;
 
-            Resource(5500, resource_operations::R, ((member_pointer)(&instance::digital_input_state)),
-                     MemberSize(instance::digital_input_state), digital_input_state);
-            Resource(5501, resource_operations::R,((member_pointer)(&instance::digital_input_counter)),
-                     MemberSize(instance::digital_input_counter), digital_input_counter);
-            Resource(5750, resource_operations::RW, ((member_pointer)(&instance::application_type)),
-                     MemberSize(instance::application_type), application_type);
+            RESOURCE(5500, resource_operations::R, ((member_pointer)(&instance::digital_input_state)),
+                     MEMBER_SIZE(instance::digital_input_state), digital_input_state);
+            RESOURCE(5501, resource_operations::R, ((member_pointer)(&instance::digital_input_counter)),
+                     MEMBER_SIZE(instance::digital_input_counter), digital_input_counter);
+            RESOURCE(5750, resource_operations::RW, ((member_pointer)(&instance::application_type)),
+                     MEMBER_SIZE(instance::application_type), application_type);
 
         public:
             lwm2m_object_resource ** get_all_res(size_t* res_count) override {

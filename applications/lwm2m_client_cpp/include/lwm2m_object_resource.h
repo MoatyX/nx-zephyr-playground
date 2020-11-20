@@ -45,6 +45,7 @@ typedef void* lwm2m_instance_base::* member_pointer;
     private:
         lwm2m_engine_get_data_cb_t read_cb;
         lwm2m_engine_set_data_cb_t write_cb;
+        lwm2m_engine_user_cb_t  delete_cb;
     };
 }
 

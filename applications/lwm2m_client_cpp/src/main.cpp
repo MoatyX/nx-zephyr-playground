@@ -28,6 +28,14 @@ void *app_type_read_cb(uint16_t obj_inst_id, uint16_t res_id, uint16_t res_inst_
     return output;
 }
 
+int inst_delete(uint16_t inst_id) {
+    printk("deleting instance %d\n", inst_id);
+
+    /* some processing.... */
+
+    return 0;   //return 0 if all good, otherwise a negative error code from errorno.h
+}
+
 void main() {
     LOG_INF("LwM2M C++ Client is starting....");
     context.set_server_address(69, SERVER_ADDR);
@@ -36,12 +44,15 @@ void main() {
     button_inst.digital_input_state = false;
     button_inst.instance_id = 0;
     button_inst.digital_input_counter = 1337;
+    button_inst.set_delete_cb(inst_delete);
     nx::set_str(button_inst.application_type, "Hello World!");
     push_button_obj.application_type.set_read_callback(app_type_read_cb);
     push_button_obj.register_instance(&button_inst);
 
     context.register_object(&push_button_obj);
     context.start(0, rd_client_event);
+
+//    lwm2m_engine_register_exec_callback()
 }
 
 // Client event callback function
