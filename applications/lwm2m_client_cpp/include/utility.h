@@ -18,6 +18,7 @@
 namespace nx {
     char* lwm2m_object_to_path(uint16_t obj_id, uint16_t obj_inst_id);
     char* lwm2m_object_to_path(uint16_t obj_id, uint16_t obj_inst_id, uint16_t resource_id, uint16_t resource_inst_id);
+    char* lwm2m_object_to_path(uint16_t obj_id, uint16_t obj_inst_id, uint16_t resource_id);
 
     /**
      * quickly assign a char array some string value

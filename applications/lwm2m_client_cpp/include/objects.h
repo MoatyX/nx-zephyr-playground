@@ -11,10 +11,12 @@
 #include "nx_string.h"
 
 namespace nx {
-    typedef lwm2m_engine_set_data_cb_t executable;
+    typedef lwm2m_engine_user_cb_t executable;
 
-#define RESOURCE(id, op, member_ptr, member_size, resource_name)   lwm2m_object_resource resource_name{(id), (op), (member_ptr), (member_size)}
 #define MEMBER_SIZE(member) sizeof(decltype((member)))
+
+#define RESOURCE(id, type, op, member_ptr, member_size, resource_name)   \
+    lwm2m_object_resource resource_name{(id), (type), (op), (member_ptr), (member_size)}
 }
 
 #endif //LWM2M_CLIENT_CPP_OBJECTS_H

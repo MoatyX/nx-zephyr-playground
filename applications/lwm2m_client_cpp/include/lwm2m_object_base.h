@@ -16,7 +16,8 @@ namespace nx {
     public:
         explicit inline lwm2m_object_base(uint16_t obj_id) : object_id{obj_id} {
             current_instances_count = 0;
-        };
+        }
+
         ~lwm2m_object_base() = default;
 
         bool register_instance(lwm2m_instance_base* instance);

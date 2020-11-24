@@ -42,7 +42,7 @@ namespace nx {
          * @param obj pointer to the object's class
          * @return true if registration successful
          */
-        bool register_object(lwm2m_object_base* obj);
+        bool register_object(lwm2m_object_base* obj, bool internal_obj = false);
 
         /**
          * @brief unregister (delete) an object instance
@@ -53,7 +53,7 @@ namespace nx {
 
     public:
         id3::object device;
-        id3::instance device_inst;
+        id3::instance device_instance;
 
     private:
         const char *endpoint_name;

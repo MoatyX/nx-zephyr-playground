@@ -9,12 +9,12 @@
 
 namespace nx {
     namespace id3 {
-        class instance: public lwm2m_instance_base {
+        class instance : public lwm2m_instance_base {
         public:
-            char* manufacturer;
-            char* model_number;
-            char* serial_umber;
-            char* firmware_version;
+            char *manufacturer;
+            char *model_number;
+            char *serial_umber;
+            char *firmware_version;
 
             executable reboot;
             executable factory_rest;
@@ -33,10 +33,10 @@ namespace nx {
             char utc_offset[DEFAULT_MAX_STR_LEN];
             char timezone[DEFAULT_MAX_STR_LEN];
 
-            char* supported_binding_and_modes;
-            char* device_type;
-            char* hardware_version;
-            char* software_version;
+            char *supported_binding_and_modes;
+            char *device_type;
+            char *hardware_version;
+            char *software_version;
 
             int battery_status;
             int memory_total;
@@ -45,89 +45,101 @@ namespace nx {
         };
 
 #define ID3_RES_COUNT   22
-        class object: public lwm2m_object_base {
+
+        class object : public lwm2m_object_base {
         public:
-            RESOURCE(0, resource_operations::R, ((member_pointer)(&instance::manufacturer)),
+            object() : lwm2m_object_base(3) {};
+
+            ~object() = default;
+
+            RESOURCE(0, resource_type::PTR, resource_operations::R, ((member_pointer)(&instance::manufacturer)),
                      MEMBER_SIZE(instance::manufacturer), manufacturer);
-            RESOURCE(1, resource_operations::R, ((member_pointer)(&instance::model_number)),
+            RESOURCE(1, resource_type::PTR, resource_operations::R, ((member_pointer)(&instance::model_number)),
                      MEMBER_SIZE(instance::model_number), model_number);
-            RESOURCE(2, resource_operations::R, ((member_pointer)(&instance::serial_umber)),
+            RESOURCE(2, resource_type::PTR, resource_operations::R, ((member_pointer)(&instance::serial_umber)),
                      MEMBER_SIZE(instance::serial_umber), serial_umber);
-            RESOURCE(3, resource_operations::R, ((member_pointer)(&instance::firmware_version)),
+            RESOURCE(3, resource_type::PTR, resource_operations::R, ((member_pointer)(&instance::firmware_version)),
                      MEMBER_SIZE(instance::firmware_version), firmware_version);
 
-            RESOURCE(4, resource_operations::EXEC, ((member_pointer)(&instance::reboot)),
+            RESOURCE(4, resource_type::PTR, resource_operations::EXEC, ((member_pointer)(&instance::reboot)),
                      MEMBER_SIZE(instance::reboot), reboot);
-            RESOURCE(5, resource_operations::EXEC, ((member_pointer)(&instance::factory_rest)),
+            RESOURCE(5, resource_type::PTR, resource_operations::EXEC, ((member_pointer)(&instance::factory_rest)),
                      MEMBER_SIZE(instance::factory_rest), factory_rest);
 
-            RESOURCE(6, resource_operations::R, ((member_pointer)(&instance::available_power_sources)),
+            RESOURCE(6, resource_type::MULTIPLE, resource_operations::R,
+                     ((member_pointer)(&instance::available_power_sources)),
                      MEMBER_SIZE(instance::available_power_sources), available_power_sources);
-            RESOURCE(7, resource_operations::R, ((member_pointer)(&instance::power_source_voltage)),
+            RESOURCE(7, resource_type::MULTIPLE, resource_operations::R,
+                     ((member_pointer)(&instance::power_source_voltage)),
                      MEMBER_SIZE(instance::power_source_voltage), power_source_voltage);
-            RESOURCE(8, resource_operations::R, ((member_pointer)(&instance::power_source_current)),
+            RESOURCE(8, resource_type::MULTIPLE, resource_operations::R,
+                     ((member_pointer)(&instance::power_source_current)),
                      MEMBER_SIZE(instance::power_source_current), power_source_current);
 
 
-            RESOURCE(9, resource_operations::R, ((member_pointer)(&instance::battery_level)),
+            RESOURCE(9, resource_type::SINGLE, resource_operations::R, ((member_pointer)(&instance::battery_level)),
                      MEMBER_SIZE(instance::battery_level), battery_level);
-            RESOURCE(10, resource_operations::R, ((member_pointer)(&instance::memory_free)),
+            RESOURCE(10, resource_type::SINGLE, resource_operations::R, ((member_pointer)(&instance::memory_free)),
                      MEMBER_SIZE(instance::memory_free), memory_free);
-            RESOURCE(11, resource_operations::R, ((member_pointer)(&instance::error_code)),
+            RESOURCE(11, resource_type::MULTIPLE, resource_operations::R, ((member_pointer)(&instance::error_code)),
                      MEMBER_SIZE(instance::error_code), error_code);
 
-            RESOURCE(12, resource_operations::EXEC, ((member_pointer)(&instance::reset_error_code)),
+            RESOURCE(12, resource_type::PTR, resource_operations::EXEC,
+                     ((member_pointer)(&instance::reset_error_code)),
                      MEMBER_SIZE(instance::reset_error_code), reset_error_code);
 
-            RESOURCE(13, resource_operations::RW, ((member_pointer)(&instance::current_time)),
+            RESOURCE(13, resource_type::SINGLE, resource_operations::RW, ((member_pointer)(&instance::current_time)),
                      MEMBER_SIZE(instance::current_time), current_time);
-            RESOURCE(14, resource_operations::RW, ((member_pointer)(&instance::utc_offset)),
+            RESOURCE(14, resource_type::SINGLE, resource_operations::RW, ((member_pointer)(&instance::utc_offset)),
                      MEMBER_SIZE(instance::utc_offset), utc_offset);
-            RESOURCE(15, resource_operations::RW, ((member_pointer)(&instance::timezone)),
+            RESOURCE(15, resource_type::SINGLE, resource_operations::RW, ((member_pointer)(&instance::timezone)),
                      MEMBER_SIZE(instance::timezone), timezone);
 
-            RESOURCE(16, resource_operations::R, ((member_pointer)(&instance::supported_binding_and_modes)),
+            RESOURCE(16, resource_type::PTR, resource_operations::R,
+                     ((member_pointer)(&instance::supported_binding_and_modes)),
                      MEMBER_SIZE(instance::supported_binding_and_modes), supported_binding_and_modes);
-            RESOURCE(17, resource_operations::R, ((member_pointer)(&instance::device_type)),
+            RESOURCE(17, resource_type::PTR, resource_operations::R, ((member_pointer)(&instance::device_type)),
                      MEMBER_SIZE(instance::device_type), device_type);
-            RESOURCE(18, resource_operations::R, ((member_pointer)(&instance::hardware_version)),
+            RESOURCE(18, resource_type::PTR, resource_operations::R, ((member_pointer)(&instance::hardware_version)),
                      MEMBER_SIZE(instance::hardware_version), hardware_version);
-            RESOURCE(19, resource_operations::R, ((member_pointer)(&instance::software_version)),
+            RESOURCE(19, resource_type::PTR, resource_operations::R, ((member_pointer)(&instance::software_version)),
                      MEMBER_SIZE(instance::software_version), software_version);
-            RESOURCE(20, resource_operations::R, ((member_pointer)(&instance::battery_status)),
+
+            RESOURCE(20, resource_type::SINGLE, resource_operations::R, ((member_pointer)(&instance::battery_status)),
                      MEMBER_SIZE(instance::battery_status), battery_status);
-            RESOURCE(21, resource_operations::R, ((member_pointer)(&instance::memory_total)),
+            RESOURCE(21, resource_type::SINGLE, resource_operations::R, ((member_pointer)(&instance::memory_total)),
                      MEMBER_SIZE(instance::memory_total), memory_total);
 
         public:
-            lwm2m_object_resource ** get_all_res(size_t *res_count) override {
+            lwm2m_object_resource **get_all_res(size_t *res_count) override {
                 *res_count = ID3_RES_COUNT;
+                return all_res;
             }
 
         private:
-            lwm2m_object_resource* all_res[ID3_RES_COUNT] {
-                &manufacturer,
-                &model_number,
-                &serial_umber,
-                &firmware_version,
-                &reboot,
-                &factory_rest,
-                &available_power_sources,
-                &power_source_voltage,
-                &power_source_current,
-                &battery_level,
-                &memory_free,
-                &error_code,
-                &reset_error_code,
-                &current_time,
-                &utc_offset,
-                &timezone,
-                &supported_binding_and_modes,
-                &device_type,
-                &hardware_version,
-                &software_version,
-                &battery_status,
-                &memory_total
+            lwm2m_object_resource *all_res[ID3_RES_COUNT]{
+                    &manufacturer,
+                    &model_number,
+                    &serial_umber,
+                    &firmware_version,
+                    &reboot,
+                    &factory_rest,
+                    &available_power_sources,
+                    &power_source_voltage,
+                    &power_source_current,
+                    &battery_level,
+                    &memory_free,
+                    &error_code,
+                    &reset_error_code,
+                    &current_time,
+                    &utc_offset,
+                    &timezone,
+                    &supported_binding_and_modes,
+                    &device_type,
+                    &hardware_version,
+                    &software_version,
+                    &battery_status,
+                    &memory_total
             };
         };
     }

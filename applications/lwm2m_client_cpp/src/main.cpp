@@ -36,6 +36,15 @@ int inst_delete(uint16_t inst_id) {
     return 0;   //return 0 if all good, otherwise a negative error code from errorno.h
 }
 
+//example of binding the reboot callback of the device object (id3) to this function
+int device_reboot_cb(uint16_t inst_id) {
+    printk("REBOOOTING!!!\n");
+
+    /* some processing.... */
+
+    return 0;   //return 0 if all good, otherwise a negative error code from errorno.h
+}
+
 void main() {
     LOG_INF("LwM2M C++ Client is starting....");
     context.set_server_address(69, SERVER_ADDR);
@@ -49,10 +58,13 @@ void main() {
     push_button_obj.application_type.set_read_callback(app_type_read_cb);
     push_button_obj.register_instance(&button_inst);
 
-    context.register_object(&push_button_obj);
+    context.device_instance.manufacturer = "Navimatix";
+    context.device_instance.device_type = "Zephyr LwM2M C++ Client model";
+    context.device_instance.reboot = device_reboot_cb;
+
+//    context.register_object(&push_button_obj);
     context.start(0, rd_client_event);
 
-//    lwm2m_engine_register_exec_callback()
 }
 
 // Client event callback function
