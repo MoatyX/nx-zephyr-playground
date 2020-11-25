@@ -63,7 +63,7 @@ void main() {
     context.device_instance.reboot = device_reboot_cb;
     context.device_instance.available_power_sources.allocate_instance(69);      //multi instance resource demo
 
-//    context.register_object(&push_button_obj);
+    context.register_object(&push_button_obj);
     context.start(0, rd_client_event);
 
 }
