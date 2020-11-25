@@ -47,7 +47,7 @@ namespace nx {
         //creating resource instance: lwm2m_engine_create_res_inst("<obj_id>/<obj_inst_id>/<obj_res_id>/<res_instance>");
         //setting resource data: lwm2m_engine_set_res_data(...)
         //setting callback data:lwm2m_engine_register_exec_callback(...)
-        /*  Algorithm:
+        /*  pseudo Algorithm:
          *  -create all instances registered inside the lwm2m_object_base
          *  for all object_instances do {
          *      -create res instances if any
@@ -63,15 +63,13 @@ namespace nx {
             if (!is_intern)
                 output |= (bool) lwm2m_engine_create_obj_inst(obj_inst_path);
 
-            //skip creating resource instances for now... TODO: do it
-
             //bind zephyr callbacks with the user-defined ones
             size_t res_count = 0;
             lwm2m_object_resource **all_res = obj->get_all_res(&res_count);
             auto inst = obj->get_instance(i);
             for (size_t j = 0; j < res_count; ++j) {
                 lwm2m_object_resource *res = all_res[j];
-                char *res_path = lwm2m_object_to_path(obj->object_id, i, res->resource_id);
+                char *res_path = nullptr;
 
                 //register read/write callbacks
                 lwm2m_engine_get_data_cb_t read_cb = res->get_read_cb();
@@ -86,12 +84,25 @@ namespace nx {
                 switch (res->type) {
                     case resource_type::SINGLE:
                         data = &(inst->*(res->mem_ptr));
+                        res_path = lwm2m_object_to_path(obj->object_id, i, res->resource_id, 0);
                         break;
-                    case resource_type::MULTIPLE:
-                        printk("multiple data is not yet supported!\n");
+                    case resource_type::MULTIPLE: {
+                        multi_inst_resource *res_data = (multi_inst_resource *) (&(inst->*(res->mem_ptr)));;
+                        int alloc = res_data->get_allocated_count();
+
+                        //bind all allocated instances to the lwm2m engine
+                        for (int k = 0; k < alloc; ++k) {
+                            bool ret = res_data->index(k, reinterpret_cast<int **>(&data));
+                            if (!ret) continue;
+
+                            res_path = lwm2m_object_to_path(obj->object_id, i, res->resource_id, k);
+                            lwm2m_engine_create_res_inst(res_path);
+                        }
+                    }
                         break;
                     case resource_type::PTR:
                         data = (inst->*(res->mem_ptr));
+                        res_path = lwm2m_object_to_path(obj->object_id, i, res->resource_id, 0);
                         break;
                 }
 

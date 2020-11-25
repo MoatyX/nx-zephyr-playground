@@ -19,13 +19,13 @@ namespace nx {
             executable reboot;
             executable factory_rest;
 
-            int available_power_sources[CONFIG_LWM2M_DEVICE_PWRSRC_MAX];
-            int power_source_voltage[CONFIG_LWM2M_DEVICE_PWRSRC_MAX];
-            int power_source_current[CONFIG_LWM2M_DEVICE_PWRSRC_MAX];
+            multi_inst_resource available_power_sources;
+            multi_inst_resource power_source_voltage;
+            multi_inst_resource power_source_current;
 
             int battery_level;
             int memory_free;
-            int error_code[8];
+            multi_inst_resource error_code;
 
             executable reset_error_code;
 
@@ -68,13 +68,13 @@ namespace nx {
 
             RESOURCE(6, resource_type::MULTIPLE, resource_operations::R,
                      ((member_pointer)(&instance::available_power_sources)),
-                     MEMBER_SIZE(instance::available_power_sources), available_power_sources);
+                     multi_inst_resource::size(), available_power_sources);
             RESOURCE(7, resource_type::MULTIPLE, resource_operations::R,
                      ((member_pointer)(&instance::power_source_voltage)),
-                     MEMBER_SIZE(instance::power_source_voltage), power_source_voltage);
+                     multi_inst_resource::size(), power_source_voltage);
             RESOURCE(8, resource_type::MULTIPLE, resource_operations::R,
                      ((member_pointer)(&instance::power_source_current)),
-                     MEMBER_SIZE(instance::power_source_current), power_source_current);
+                     multi_inst_resource::size(), power_source_current);
 
 
             RESOURCE(9, resource_type::SINGLE, resource_operations::R, ((member_pointer)(&instance::battery_level)),
