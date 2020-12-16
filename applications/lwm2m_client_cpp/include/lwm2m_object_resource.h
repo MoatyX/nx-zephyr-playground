@@ -47,7 +47,7 @@ typedef void* lwm2m_instance_base::* member_pointer;
     class lwm2m_object_resource {
     public:
         lwm2m_object_resource(uint16_t resource_ud, resource_type_t res_type, resource_operations_t op,
-                              member_pointer mem_ptr, int mem_size);
+                              member_pointer mem_ptr);
         ~lwm2m_object_resource() = default;
 
         void set_read_callback(lwm2m_engine_get_data_cb_t read_callback);
@@ -60,7 +60,6 @@ typedef void* lwm2m_instance_base::* member_pointer;
         uint16_t resource_id;
         resource_operations_t operation;
         resource_type_t  type;
-        int member_size;
         uint8_t user_data_flags{0};
 
     private:

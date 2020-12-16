@@ -24,10 +24,9 @@ namespace nx {
     }
 
     lwm2m_object_resource::lwm2m_object_resource(uint16_t resource_id, resource_type_t res_type,
-                                                 resource_operations_t op, member_pointer mem_ptr, int mem_size) {
+                                                 resource_operations_t op, member_pointer mem_ptr) {
         this->resource_id = resource_id;
         this->mem_ptr = mem_ptr;
-        this->member_size = mem_size;
         this->operation = op;
         if (operation == resource_operations::EXEC)
             this->type = resource_type::PTR;    //execute resource types are automatically a pointer type

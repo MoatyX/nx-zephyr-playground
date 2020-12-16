@@ -9,28 +9,23 @@
 
 namespace nx {
 
-#define DEFAULT_MAX_INST_COUNT  10
-
 /**
  * a class to manage multi-instance resources
  */
+    template<typename T, uint16_t max_count>
     class multi_inst_resource {
     public:
         multi_inst_resource() = default;
 
         ~multi_inst_resource() = default;
 
-        /**
-         *
-         * @param inst_val
-         * @return
-         */
-        bool allocate_instance(int inst_val);
+        bool allocate_instance(T inst_val);
 
-        bool index(int i, int *out_val);
+        //access an element by index
+        bool index(int i, T *out_val);
 
-        bool index(int i, int** out_ptr_val);
-
+        //access an element by index
+        bool index(int i, T** out_ptr_val);
         int get_allocated_count() const;
 
         constexpr inline static int size() {
@@ -38,9 +33,38 @@ namespace nx {
         };
 
     private:
-        int current_alloc_head;
-        int instances_val[DEFAULT_MAX_INST_COUNT];
+        int current_alloc_head = 0;
+        T instances_val[max_count];
     };
+
+    template<typename T, uint16_t max_count>
+    bool multi_inst_resource<T, max_count>::allocate_instance(T inst_val) {
+        if (current_alloc_head + 1 > max_count) return false;
+
+        instances_val[current_alloc_head] = inst_val;
+        current_alloc_head++;
+
+        return true;
+    }
+
+    template<typename T, uint16_t max_count>
+    bool multi_inst_resource<T, max_count>::index(int i, T *out_val) {
+        if (i >= max_count) return false;
+        *out_val = instances_val[i];
+        return true;
+    }
+
+    template<typename T, uint16_t max_count>
+    int multi_inst_resource<T, max_count>::get_allocated_count() const {
+        return current_alloc_head;
+    }
+
+    template<typename T, uint16_t max_count>
+    bool multi_inst_resource<T, max_count>::index(int i, T **out_ptr_val) {
+        if (i >= max_count) return false;
+        *out_ptr_val = &instances_val[i];
+        return true;
+    }
 }
 
 

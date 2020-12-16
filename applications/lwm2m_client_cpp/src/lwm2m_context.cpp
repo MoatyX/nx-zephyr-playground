@@ -69,9 +69,10 @@ namespace nx {
             auto inst = obj->get_instance(i);
             for (size_t j = 0; j < res_count; ++j) {
                 lwm2m_object_resource *res = all_res[j];
-                char *res_path = nullptr;
+                char *res_path = lwm2m_object_to_path(obj->object_id, i, res->resource_id, 0);
 
                 //register read/write callbacks
+                //TODO: investigate possible bug with setting a read/write callback for multi instance res
                 lwm2m_engine_get_data_cb_t read_cb = res->get_read_cb();
                 lwm2m_engine_set_data_cb_t post_write_cb = res->get_post_write_cb();
                 if (read_cb != nullptr) lwm2m_engine_register_read_callback(res_path, read_cb);
@@ -84,25 +85,25 @@ namespace nx {
                 switch (res->type) {
                     case resource_type::SINGLE:
                         data = &(inst->*(res->mem_ptr));
-                        res_path = lwm2m_object_to_path(obj->object_id, i, res->resource_id, 0);
                         break;
                     case resource_type::MULTIPLE: {
-                        multi_inst_resource *res_data = (multi_inst_resource *) (&(inst->*(res->mem_ptr)));;
-                        int alloc = res_data->get_allocated_count();
-
-                        //bind all allocated instances to the lwm2m engine
-                        for (int k = 0; k < alloc; ++k) {
-                            bool ret = res_data->index(k, reinterpret_cast<int **>(&data));
-                            if (!ret) continue;
-
-                            res_path = lwm2m_object_to_path(obj->object_id, i, res->resource_id, k);
-                            lwm2m_engine_create_res_inst(res_path);
-                        }
+                        break;
+                        //TODO: needs to be reworked
+//                        multi_inst_resource *res_data = (multi_inst_resource *) (&(inst->*(res->mem_ptr)));;
+//                        int alloc = res_data->get_allocated_count();
+//
+//                        //bind all allocated instances to the lwm2m engine
+//                        for (int k = 0; k < alloc; ++k) {
+//                            bool ret = res_data->index(k, reinterpret_cast<int **>(&data));
+//                            if (!ret) continue;
+//
+//                            res_path = lwm2m_object_to_path(obj->object_id, i, res->resource_id, k);
+//                            lwm2m_engine_create_res_inst(res_path);
+//                        }
                     }
                         break;
                     case resource_type::PTR:
                         data = (inst->*(res->mem_ptr));
-                        res_path = lwm2m_object_to_path(obj->object_id, i, res->resource_id, 0);
                         break;
                 }
 
@@ -111,7 +112,7 @@ namespace nx {
                     switch (res->operation) {
                         case resource_operations::R:
                         case resource_operations::RW:
-                            lwm2m_engine_set_res_data(res_path, data, res->member_size, res->user_data_flags);
+                            lwm2m_engine_set_res_data(res_path, data, sizeof(data), res->user_data_flags);
                             break;
                         case resource_operations::EXEC:
                             lwm2m_engine_register_exec_callback(res_path, reinterpret_cast<executable>(data));

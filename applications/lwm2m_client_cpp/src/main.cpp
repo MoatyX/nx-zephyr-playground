@@ -54,7 +54,6 @@ void main() {
     button_inst.instance_id = 0;
     button_inst.digital_input_counter = 1337;
     button_inst.set_delete_cb(inst_delete);
-    nx::set_str(button_inst.application_type, "Hello World!");
     push_button_obj.application_type.set_read_callback(app_type_read_cb);
     push_button_obj.register_instance(&button_inst);
 
@@ -65,7 +64,6 @@ void main() {
 
     context.register_object(&push_button_obj);
     context.start(0, rd_client_event);
-
 }
 
 // Client event callback function

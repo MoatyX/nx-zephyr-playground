@@ -16,8 +16,8 @@ namespace nx {
 
 #define MEMBER_SIZE(member) sizeof(decltype((member)))      //BUG: this will not work with pointer type resources (char*)
 
-#define RESOURCE(id, type, op, member_ptr, member_size, resource_name)   \
-    lwm2m_object_resource resource_name{(id), (type), (op), (member_ptr), (member_size)}
+#define RESOURCE(id, type, op, member_ptr, resource_name)   \
+    lwm2m_object_resource resource_name{(id), (type), (op), (member_ptr)}
 }
 
 #endif //LWM2M_CLIENT_CPP_OBJECTS_H
