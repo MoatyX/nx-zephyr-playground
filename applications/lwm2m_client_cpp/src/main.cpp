@@ -10,8 +10,9 @@
 LOG_MODULE_REGISTER(NX_LWM2M_CPP_CLIENT, LOG_LEVEL_DBG);
 
 #include "lwm2m_context.h"
-#include "lwm2m_objects/push_button_id3347.h"
 #include "utility.h"
+
+#include <generated_lwm2m_objects/push_button_id3347.h>
 
 #define DEVICE_NAME CONFIG_BOARD
 #define SERVER_ADDR CONFIG_NET_CONFIG_PEER_IPV4_ADDR
@@ -50,8 +51,8 @@ void main() {
     context.set_server_address(69, SERVER_ADDR);
 
     //set some data to the Button Instance object
-    button_inst.digital_input_state = false;
     button_inst.instance_id = 0;
+    button_inst.digital_input_state = false;
     button_inst.digital_input_counter = 1337;
     button_inst.set_delete_cb(inst_delete);
     push_button_obj.application_type.set_read_callback(app_type_read_cb);

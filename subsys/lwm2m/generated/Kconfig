@@ -1,0 +1,26 @@
+# AUTOMATICALLY GENERATED CODE
+# python LwM2M Objects Generator tool: https://github.com/MoatyX/lwm2m-objects-generator
+# Gen Date: 01/2021
+
+menuconfig LWM2M_CPP_SUPPORT
+    bool "Enable LwM2M Objects C++ Classes Model"
+    help
+        This options enables the Auto-generated C++ Classes of all OMA LwM2M Objects
+
+
+config LWM2M_CPP_PUSH_BUTTON
+    bool "Enable C++ Version of Push button"
+    default n
+    depends on LWM2M_CPP_SUPPORT
+    help
+        This IPSO object is used to report the state of a momentary action push button control and to
+            count the number of times the control has been operated since the last observation.
+        
+
+config LWM2M_CPP_PUSH_BUTTON_MAX_INSTANCE_COUNT
+    int "Maximum number of instances to be created"
+    default 1
+    depends on LWM2M_CPP_PUSH_BUTTON
+    help
+        This setting establishes the total count of object instances
+        available to the LWM2M client.

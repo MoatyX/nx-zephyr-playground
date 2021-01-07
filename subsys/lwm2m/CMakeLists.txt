@@ -1,0 +1,2 @@
+
+add_subdirectory_ifdef(CONFIG_LWM2M_CPP_SUPPORT "generated")

@@ -101,9 +101,9 @@ then
           "name": "Linux",
           "includePath": [
               "\${workspaceFolder}/**",
-              "\${env:ZEPHYR_HOME}/",
-              "\${env:ZEPHYR_HOME}/include/",
-              "\${env:ZEPHYR_HOME}/subsys/**"
+              "\${env:ZEPHYR_HOME_DIR}/",
+              "\${env:ZEPHYR_HOME_DIR}/include/",
+              "\${env:ZEPHYR_HOME_DIR}/subsys/**"
           ],
           "defines": [],
           "compilerPath": "/usr/bin/gcc",

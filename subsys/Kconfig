@@ -1,0 +1,6 @@
+
+menu "Sub-Systems"
+
+rsource "lwm2m/Kconfig"
+
+endmenu

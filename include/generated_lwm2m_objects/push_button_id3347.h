@@ -1,8 +1,9 @@
 
+
 /**
 * AUTOMATICALLY GENERATED CODE
 * python LwM2M Objects Generator tool: https://github.com/MoatyX/lwm2m-objects-generator
-* Gen Date: 12/2020
+* Gen Date: 01/2021
 */
 
 #ifndef NX_GENERATED_PUSH_BUTTON_ID_3347_H_
@@ -12,14 +13,7 @@
 
 namespace nx {
     namespace id3347 {
-#define id3347_RES_COUNT    3         //number of resource this object has
-
-        /**
-         * @brief return the number of resources Object 3347 has
-         */
-        static constexpr uint32_t RES_COUNT() {
-            return id3347_RES_COUNT;
-        }
+        #define ID3347_RES_COUNT    3         //number of resource this object has
 
         class instance : public lwm2m_instance_base {
         public:
@@ -28,8 +22,9 @@ namespace nx {
 
         public:
             bool digital_input_state;
-            uint64_t digital_input_counter;
+            int64_t digital_input_counter;
             char* application_type;
+            
         };
 
         class object : public lwm2m_object_base {
@@ -39,14 +34,12 @@ namespace nx {
 
             //Lwm2mResource definitions
             RESOURCE(5500, resource_type::SINGLE, resource_operations::R,
-                     (member_pointer)(&instance::digital_input_state), digital_input_state);
-
+                    (member_pointer)(&instance::digital_input_state), digital_input_state);
             RESOURCE(5501, resource_type::SINGLE, resource_operations::R,
-                     (member_pointer)(&instance::digital_input_counter), digital_input_counter);
-
+                    (member_pointer)(&instance::digital_input_counter), digital_input_counter);
             RESOURCE(5750, resource_type::PTR, resource_operations::RW,
-                     (member_pointer)(&instance::application_type), application_type);
-
+                    (member_pointer)(&instance::application_type), application_type);
+            
 
         public:
 
@@ -56,16 +49,17 @@ namespace nx {
             * @return array of pointers to the resources an object has
             */
             lwm2m_object_resource **get_all_res(size_t *res_count) override {
-                if(res_count != nullptr) *res_count = RES_COUNT();
+                if(res_count != nullptr) *res_count = ID3347_RES_COUNT;
                 return all_res;
             }
 
         private:
             //define all resources
-            lwm2m_object_resource* all_res[RES_COUNT()] {
-                    &digital_input_state,
-                    &digital_input_counter,
-                    &application_type
+            lwm2m_object_resource* all_res[ID3347_RES_COUNT] {
+                &digital_input_state,
+                &digital_input_counter,
+                &application_type
+                
             };
         };
     }
